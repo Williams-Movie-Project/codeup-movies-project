@@ -14,11 +14,18 @@
     };
 
     let updateMovieWithPut = {
-        method: "Put",
+        method: "PUT",
         headers: {
             'Content-Type': 'application/json',
         },
         body: {}
+    };
+
+    let deleteMovie = {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
     };
 
 // API FETCH
@@ -70,7 +77,6 @@
                 })
                 .catch(err => reject(err));
         });
-
     }
 
     function addMovies(body) {
@@ -86,6 +92,15 @@
         });
     }
 
+    function deleteMovieByID(id){
+        return new Promise((resolve, reject) => {
+            fetch(`${url}/${id}`, deleteMovie)
+                .then(response => response.json())
+                .then(resp => resolve(resp))
+                .catch(err => reject(err));
+        });
+    }
+
 
     function populateMovies() {
         //create HTML strings for populating Page with movies
@@ -96,26 +111,6 @@
 
 // TESTING FUNCTIONALITY
 //     populateMovies();
-//
-//     const body = {title: "Jack The Ripper", rating: "5"};
-//     const newMovieAdded = addMovies(body);
-//     newMovieAdded.then(resp => console.log(resp));
-//     newMovieAdded.catch((err => console.error(err)));
-//
-//     const movieByID = getMovieByID(3);
-//     movieByID.then(resp => console.log(resp));
-//     movieByID.catch(err => console.error(err));
-//
-//     const testBodyForPut = {title: "Test Title -5", rating: "-5"};
-//     const testID = 5;
-//     const updatedMovieByID = updateMovieByID(testID, testBodyForPut);
-//     updatedMovieByID.then(response => console.log(response));
-//     updatedMovieByID.catch((err => console.error(err)));
-//
-//     const movieByTitle = getMovieByTitle("Rush Hour");
-//     movieByTitle.then(response => console.log(response));
-//     movieByTitle.catch(err => console.error(err));
-//
 //
 //     populateMovies();
 
