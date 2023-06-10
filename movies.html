@@ -44,8 +44,12 @@
 			</div>
 			<div class="modal-body">
 				<form action="">
+					<div class="container mb-5">
+						<label for="new-title" class="fs-5">Title</label>
+						<input type="text" name="title" id="new-title" class="form-control">
+					</div>
 					<div class="container d-flex align-items-center justify-content-end">
-						<button type="submit" class="btn btn-outline-secondary disabled">Submit</button>
+						<button type="submit" id="submit-new-movie-btn" class="btn btn-outline-secondary disabled form-control">Submit</button>
 					</div>
 				</form>
 			</div>
@@ -69,5 +73,6 @@
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <!--Custom JS-->
 <script src="js/fetch_movies_utils.js"></script>
+<script src="js/movies.js"></script>
 </body>
 </html>
