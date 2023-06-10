@@ -10,18 +10,38 @@ $(document).ready(function() {
     $(newSubmitBtn).on("click", submitNewMovieForm);
     $(newTitleInput).on("input", toggleNewMovieFormBtn);
 
+    function showLoader(){
+        $("#loader-div").removeClass("d-none");
+        $("#movie-container").addClass("d-none");
+    }
+
+    function hideLoader(){
+        $("#loader-div").addClass("d-none");
+        $("#movie-container").removeClass("d-none");
+    }
+
     function getAllMovies(){
-        populateMovies()
+        const movies = getMovies();
+        movies.then(resp => {
+            console.log(`inside of movies.js\n`);
+            console.log(resp);
+            hideLoader();
+        });
+        movies.catch((err => console.error(err)));
     }
 
 
     // TODO build out function
     function submitNewMovieForm(e){
         e.preventDefault()
+        showLoader();
         console.log("submit button was clicked");
         const formBody = {title: $(newTitleInput).val(), rating: $(newRatingSelection).val()}
         const movAddedResp = addMovies(formBody);
-        movAddedResp.then(resp => console.log(resp));
+        movAddedResp.then(resp => {
+            console.log(resp)
+            hideLoader();
+        });
         movAddedResp.catch(err => console.log(err));
     }
 
@@ -33,7 +53,7 @@ $(document).ready(function() {
         }
     }
 
-    const movByID = getMovieByID(5);
+    const movByID = getMovieByID(1);
     movByID.then(resp => console.log(resp));
     movByID.catch(err => console.error(err));
 

@@ -41,14 +41,12 @@ function getMovieByID(id) {
     return new Promise((resolve, reject) => {
         fetch(`${url}/${id}`)
             .then(response => {
-                console.log(response);
                 if(response.status >= 300){
                     reject(`ID is not found in DB of Movies.\nStatus code: ${response.status}\n`);
                 }
                 return response.json();
             })
             .then(data => {
-                console.log(`Got "${data.title}" by searing the index.`)
                 resolve(data)
             })
             .catch(err => reject(err));
@@ -111,16 +109,16 @@ function deleteMovieByID(id) {
 }
 
 
-function populateMovies() {
-    //create HTML strings for populating Page with movies
-    const listOfMovies = getMovies();
-    listOfMovies.then(resp => {
-        console.log(resp)
-        $("#loader-div").addClass("d-none");
-        $("#movie-container").removeClass("d-none");
-    });
-    listOfMovies.catch(err => console.error(err));
-}
+// function populateMovies() {
+//     //create HTML strings for populating Page with movies
+//     const listOfMovies = getMovies();
+//     const mov = listOfMovies.then(resp => {
+//         console.log(resp)
+//     });
+//     listOfMovies.catch(err => console.error(err));
+//
+//     return mov;
+// }
 
 // TESTING FUNCTIONALITY
 //     populateMovies();
