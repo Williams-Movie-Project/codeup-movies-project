@@ -32,12 +32,15 @@
 	</nav>
 </header>
 
+<!--    loading screen displayed when retrieving/setting data in DB -->
 <div id="loader-div" class="container d-flex justify-content-center align-items-stretch my-5">
 	<h1 id="loader-div-text" class="text-center my-5">Page is loading data.</h1>
 </div>
 
-<div id="movie-container" class="container d-none d-flex justify-content-evenly align-items-evenly my-5">
-	<h1 id="movie-div-text" class="text-center my-5">Page has loaded</h1>
+<!--    Container to hold all the movie cards   -->
+<div id="movie-container" class="container d-none my-5">
+	<h1 id="movie-div-text" class="text-center my-5">MOVIES</h1>
+	<div id="movie-row" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6"></div>
 </div>
 
 <!-- New Movie Input Form Modal -->
@@ -50,28 +53,27 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form action="">
-					<div class="container mb-5">
-						<label for="new-title" class="fs-5">Title</label>
-						<input type="text" name="title" id="new-title" class="form-control">
-					</div>
-					<div class="container my-5">
-						<select class="form-select" id="new-movie-rating">
-							<option class="text-center" selected value="0">Rating</option>
-							<option class="text-center" value="1">1 Star</option>
-							<option class="text-center" value="2">2 Stars</option>
-							<option class="text-center" value="3">3 Stars</option>
-							<option class="text-center" value="4">4 Stars</option>
-							<option class="text-center" value="5">5 Stars</option>
-						</select>
-					</div>
-					<div class="container d-flex align-items-center justify-content-end">
-						<button type="submit" id="submit-new-movie-btn" class="btn btn-outline-secondary disabled form-control">Submit</button>
-					</div>
-				</form>
+				<div class="container mb-5">
+					<label for="new-title" class="fs-5">Title</label>
+					<input type="text" name="title" id="new-title" class="form-control">
+				</div>
+				<div class="container my-5">
+					<select class="form-select" id="new-movie-rating">
+						<option class="text-center" selected value="0">Rating</option>
+						<option class="text-center" value="1">1 Star</option>
+						<option class="text-center" value="2">2 Stars</option>
+						<option class="text-center" value="3">3 Stars</option>
+						<option class="text-center" value="4">4 Stars</option>
+						<option class="text-center" value="5">5 Stars</option>
+					</select>
+				</div>
+				<div class="container d-flex align-items-center justify-content-end">
+					<button type="button" id="submit-new-movie-btn" class="btn btn-outline-secondary disabled form-control" data-bs-toggle="modal" data-bs-target="#add-new-movie-modal">Submit</button>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+				        data-bs-target="#add-new-movie-modal">Cancel</button>
 			</div>
 		</div>
 	</div>
