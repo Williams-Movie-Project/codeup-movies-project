@@ -60,9 +60,10 @@ $(document).ready(function() {
     }
 
     function createAMovieCard(movieData){
-        return `<div class="col my-4"
-                  <div id="${movieData.id}" class="card text-bg-dark border border-dark roundBorder">
-                    <div class="card-body">
+        return `<div class="col my-4">
+                  <div id="${movieData.id}" class="card text-bg-dark">
+                    <img src="../images/default-image.jpeg" class="card-img" alt="...">
+                    <div class="card-img-overlay">
                       <h5 class="card-title my-3 text-capitalize">${movieData.title}</h5>
                       <p class="card-text my-2">details go here</p>
                     </div>
