@@ -27,6 +27,7 @@ $(document).ready(function() {
             console.log(resp);
             if(resp){
                 for(let i = 0; i < resp.length; i++){
+                    console.log(createAMovieCard(resp[i]));
                     addMovieCardToMovieDiv(createAMovieCard(resp[i]));
                 }
             }
@@ -35,15 +36,15 @@ $(document).ready(function() {
         movies.catch((err => console.error(err)));
     }
 
-
-    // TODO build out function
-    function submitNewMovieForm(){
+    function submitNewMovieForm(e){
+        e.preventDefault();
         showLoader();
         console.log("submit button was clicked");
         const formBody = {title: $(newTitleInput).val(), rating: $(newRatingSelection).val()}
         const movAddedResp = addMovies(formBody);
         movAddedResp.then(resp => {
             console.log(resp)
+            console.log(createAMovieCard(resp));
             addMovieCardToMovieDiv(createAMovieCard(resp));
             hideLoader();
         });
@@ -60,14 +61,13 @@ $(document).ready(function() {
 
     function createAMovieCard(movieData){
         return `<div class="col my-4"
-                  <div id="${movieData.id}" class="card text-bg-dark">
-                    <img src="../images/default-image.jpeg" class="card-img" alt="No Image Default">
-                    <div class="card-img-overlay">
-                      <h5 class="card-title">${movieData.title}</h5>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additionacontent. This content is a little bit longer.</p>
+                  <div id="${movieData.id}" class="card text-bg-dark border border-dark roundBorder">
+                    <div class="card-body">
+                      <h5 class="card-title my-3 text-capitalize">${movieData.title}</h5>
+                      <p class="card-text my-2">details go here</p>
                     </div>
-                    <div class="card-footer">
-                      <p class="card-text text-body-secondary"><small>Rating: ${movieData.rating}</small></p>
+                    <div class="card-footer bg-dark-subtle">
+                      <p class="card-text d-flex justify-content-between text-body-secondary"><small class="mx-2">Rating</small><small class="mx-2">${movieData.rating}</small></p>
                     </div>
                   </div>
                 </div>`;
@@ -75,6 +75,7 @@ $(document).ready(function() {
 
     function addMovieCardToMovieDiv(cardString){
         $("#movie-row").append(cardString);
+        // $(cardString).appendTo($("#movie-row"));
     }
 
     const movByID = getMovieByID(1);
