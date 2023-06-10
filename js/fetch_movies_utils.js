@@ -114,7 +114,11 @@ function deleteMovieByID(id) {
 function populateMovies() {
     //create HTML strings for populating Page with movies
     const listOfMovies = getMovies();
-    listOfMovies.then(resp => console.log(resp));
+    listOfMovies.then(resp => {
+        console.log(resp)
+        $("#loader-div").addClass("d-none");
+        $("#movie-container").removeClass("d-none");
+    });
     listOfMovies.catch(err => console.error(err));
 }
 

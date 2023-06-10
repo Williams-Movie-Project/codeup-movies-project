@@ -10,6 +10,10 @@ $(document).ready(function() {
     $(newSubmitBtn).on("click", submitNewMovieForm);
     $(newTitleInput).on("input", toggleNewMovieFormBtn);
 
+    function getAllMovies(){
+        populateMovies()
+    }
+
 
     // TODO build out function
     function submitNewMovieForm(e){
@@ -34,4 +38,5 @@ $(document).ready(function() {
     movByID.catch(err => console.error(err));
 
 
+    getAllMovies();
 });
