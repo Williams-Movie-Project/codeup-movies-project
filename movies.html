@@ -12,7 +12,49 @@
 	<link rel="stylesheet" href="css/movie_style.css">
 </head>
 <body>
+<!--    Header contains nav bar/ ... collapses on small screens-->
+<header class="container-fluid m-0 p-0 " id="header">
+	<nav class="navbar bg-dark border-bottom border-bottom-dark navbar-expand-md" data-bs-theme="dark">
+		<div class="container-fluid d-flex">
+			<a class="navbar-brand fs-1 my-3 ms-0 me-2" href="#">Movies</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+			        aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<!--	Button Triggers add movie modal form    -->
+				<button id="location-search-btn" class="btn" type="button" data-bs-toggle="modal"
+				        data-bs-target="#add-new-movie-modal">Add New Movie
+				</button>
+			</div>
+		</div>
+	</nav>
+</header>
 
+
+<!-- Modal -->
+<div class="modal fade" id="add-new-movie-modal" tabindex="-1" aria-labelledby="add-movie-modal-title"
+     aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="add-movie-modal-title">New Movie Form</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form action="">
+					<div class="container d-flex align-items-center justify-content-end">
+						<button type="submit" class="btn btn-outline-secondary disabled">Submit</button>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!--BS JS-->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
