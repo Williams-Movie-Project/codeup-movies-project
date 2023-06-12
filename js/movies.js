@@ -5,20 +5,41 @@ $(document).ready(function() {
     const newSubmitBtn = $("#submit-new-movie-btn");
     const newTitleInput = $("#new-title");
     const newRatingInput = $("#new-movie-rating");
+    const deleteMovBtn = $("#delete-movie");
+    const loaderDiv = $("#loader-div");
+    const movieContainerDiv = $("#movie-container");
+    const openCanvas = $("#open-canvas");
+    const movieRow = $("#movie-row");
+    const editMovBtn = $("#edit-movie");
+    const offCanMovTitle = $("#offcanvas-movie-title");
+    const offCanMovPlot = $("#offcanvas-movie-plot");
+    const offCanMovGenre = $("#offcanvas-movie-genre");
+    const offCanMovActors = $("#offcanvas-movie-actors");
+    const offCanMovYear = $("#offcanvas-movie-year");
+    const offCanMovRating = $("#offcanvas-movie-rating");
+    const offCanMovID = $("#offcanvas-movie-id");
+    const editMovTitle = $("#edit-title");
+    const editMovPlot = $("#edit-plot");
+    const editMovGenre = $("#edit-genres");
+    const editMovActors = $("#edit-actors");
+    const editMovYear = $("#edit-year");
+    const editMovRating = $("#edit-movie-rating");
+
 
     // Static Event Listeners
     $(newSubmitBtn).on("click", submitNewMovieForm);
     $(newTitleInput).on("input", toggleNewMovieFormBtn);
-    $("#delete-movie").on("click", deleteSelectedMovie);
+    $(deleteMovBtn).on("click", deleteSelectedMovie);
+    $(editMovBtn).on("click", editSelectedMovieData);
 
     function showLoader(){
-        $("#loader-div").removeClass("d-none");
-        $("#movie-container").addClass("d-none");
+        $(loaderDiv).removeClass("d-none");
+        $(movieContainerDiv).addClass("d-none");
     }
 
     function hideLoader(){
-        $("#loader-div").addClass("d-none");
-        $("#movie-container").removeClass("d-none");
+        $(loaderDiv).addClass("d-none");
+        $(movieContainerDiv).removeClass("d-none");
     }
 
     function getAllMovies(){
@@ -37,13 +58,11 @@ $(document).ready(function() {
 
     function submitNewMovieForm(e){
         e.preventDefault();
-        showLoader();
         const formBody = {title: $(newTitleInput).val(),  rating: $(newRatingInput).val()}
         const movAddedResp = addMovies(formBody);
         movAddedResp.then(resp => {
             addMovieCardToMovieDiv(createAMovieCard(resp));
             addClickEventToCards(resp.id);
-            hideLoader();
             $(newTitleInput).val("");
             $(newRatingInput).val(0);
         });
@@ -52,16 +71,16 @@ $(document).ready(function() {
 
     function addClickEventToCards(cardID){
         $(`#${cardID}`).on("click", function (){
-            $("#open-canvas").click();
+            $(openCanvas).click();
             let movieByID = getMovieByID(cardID);
             movieByID.then(resp => {
-                $("#offcanvas-movie-title").html(`${resp.title}`);
-                $("#offcanvas-movie-plot").html(`${resp.plot}`);
-                $("#offcanvas-movie-genre").html(`Genre(s): ${resp.genre}`);
-                $("#offcanvas-movie-actors").html(`Actor(s): ${resp.actors}`);
-                $("#offcanvas-movie-year").html(`Year: ${resp.year}`);
-                $("#offcanvas-movie-rating").html(`Rating: ${resp.rating}`);
-                $("#offcanvas-movie-id").html(resp.id);
+                $(offCanMovTitle).html(`${resp.title}`);
+                $(offCanMovPlot).html(`${resp.plot}`);
+                $(offCanMovGenre).html(`Genre(s): ${resp.genre}`);
+                $(offCanMovActors).html(`Actor(s): ${resp.actors}`);
+                $(offCanMovYear).html(`Year: ${resp.year}`);
+                $(offCanMovRating).html(`Rating: ${resp.rating}`);
+                $(offCanMovID).html(resp.id);
             });
             movieByID.catch(err => console.error(err));
         })
@@ -69,13 +88,19 @@ $(document).ready(function() {
 
     function deleteSelectedMovie(e){
         e.preventDefault();
-        const indexToDelete = parseInt($("#offcanvas-movie-id").text());
+        const indexToDelete = parseInt($(offCanMovID).text());
         const movieDeleted = deleteMovieByID(indexToDelete);
         movieDeleted.then(resp => {
-            $("#open-canvas").click();
+            $(openCanvas).click();
             $(`#${indexToDelete}`).remove();
         })
         movieDeleted.catch(err => console.error(err));
+    }
+
+    function editSelectedMovieData(e){
+        e.preventDefault();
+        const indexToEdit = parseInt($(offCanMovID).text());
+
     }
 
     function toggleNewMovieFormBtn(){
@@ -102,7 +127,7 @@ $(document).ready(function() {
     }
 
     function addMovieCardToMovieDiv(cardString){
-        $("#movie-row").append(cardString);
+        $(movieRow).append(cardString);
     }
 
     getAllMovies();
