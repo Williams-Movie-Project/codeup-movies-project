@@ -61,16 +61,26 @@ $(document).ready(function() {
     $(editMovBtn).on("click", populateSelectedEditMovieDataForm);
     $(editSubmitBtn).on("click", editSelectedMovie);
 
+    /**
+     * hides cards and displays loader div.
+     */
     function showLoader(){
         $(loaderDiv).removeClass("d-none");
         $(movieContainerDiv).addClass("d-none");
     }
 
+    /**
+     * hides loader div and displays cards.
+     */
     function hideLoader(){
         $(loaderDiv).addClass("d-none");
         $(movieContainerDiv).removeClass("d-none");
     }
 
+    /**
+     * calls fetch on all moves, then creates and displays them.
+     * called upon initial load.
+     */
     function getAllMovies(){
         const movies = getMovies();
         movies.then(resp => {
@@ -85,6 +95,12 @@ $(document).ready(function() {
         movies.catch((err => console.error(err)));
     }
 
+    /**
+     * upon clicking submit on new movie form, create fetch body
+     * and call the add movies function to perform fetch. create
+     * new card for fetched movie and reset form's values.
+     * @param e
+     */
     function submitNewMovieForm(e){
         e.preventDefault();
         const formBody = {title: $(newTitleInput).val(),  rating: $(newRatingInput).val()}
@@ -98,6 +114,12 @@ $(document).ready(function() {
         movAddedResp.catch(err => console.error(err));
     }
 
+    /**
+     * takes in an id and adds click event listener that opens
+     * the side canvas and populates the appropriate sections
+     * with movie data after fetching the movie by ID.
+     * @param cardID
+     */
     function addClickEventToCards(cardID){
         $(`#${cardID}`).on("click", function (){
             $(openCanvas).click();
@@ -115,17 +137,28 @@ $(document).ready(function() {
         })
     }
 
+    /**
+     * Takes the selected movie and deletes the card with the id that matches
+     * the movies id, and calls the function that deletes the movie from the DB
+     * through a fetch method
+     * @param e
+     */
     function deleteSelectedMovie(e){
         e.preventDefault();
         const indexToDelete = parseInt($(offCanMovID).text());
         const movieDeleted = deleteMovieByID(indexToDelete);
-        movieDeleted.then(resp => {
+        movieDeleted.then(() => {
             $(openCanvas).click();
             $(`#${indexToDelete}`).remove();
         })
         movieDeleted.catch(err => console.error(err));
     }
 
+    /**
+     * takes in the side menu movie info and populates
+     * the edit form modal.
+     * @param e
+     */
     function populateSelectedEditMovieDataForm(e){
         e.preventDefault();
         $(editMovTitle).val($(offCanMovTitle).html());
@@ -136,6 +169,12 @@ $(document).ready(function() {
         $(editMovRating).val($("#selected-rating").html());
     }
 
+    /**
+     * upon clicking submit in edit form, creates a patch body and calls the function
+     * to update a movie by id. upon success, replace side menu information with updated
+     * data and replace the rating on the card if it was changed.
+     * @param e
+     */
     function editSelectedMovie(e){
         e.preventDefault();
         const indexToEdit = parseInt($(offCanMovID).text());
@@ -161,6 +200,9 @@ $(document).ready(function() {
         movieUpdated.catch(err => console.error(err));
     }
 
+    /**
+     * allow user to submit new movie form if a title has been entered.
+     */
     function toggleNewMovieFormBtn(){
         if($(newTitleInput).val() !== "" && $(newSubmitBtn).hasClass("disabled")){
             $(newSubmitBtn).removeClass("disabled");
@@ -169,6 +211,12 @@ $(document).ready(function() {
         }
     }
 
+    /**
+     * takes in movie data and creates a card with an id equal to db id for
+     * that movie. if no poster data is provided input a default image.
+     * @param movieData
+     * @returns {string}
+     */
     function createAMovieCard(movieData){
         if(!movieData.poster){
             movieData.poster = "../images/default-image.jpeg";
@@ -184,12 +232,20 @@ $(document).ready(function() {
                 </div>`;
     }
 
+    /**
+     * place the new movie card into the movie row div.
+     * @param cardString
+     */
     function addMovieCardToMovieDiv(cardString){
         $(movieRow).append(cardString);
     }
 
 
-// API FETCH
+    // API FETCH section
+    /**
+     * retrieve all movies.
+     * @returns {Promise<unknown>}
+     */
     function getMovies() {
         return new Promise((resolve, reject) => {
             fetch(url)
@@ -200,6 +256,11 @@ $(document).ready(function() {
 
     }
 
+    /**
+     * retrieve movie by id.
+     * @param id
+     * @returns {Promise<unknown>}
+     */
     function getMovieByID(id) {
         return new Promise((resolve, reject) => {
             fetch(`${url}/${id}`)
@@ -216,6 +277,11 @@ $(document).ready(function() {
         });
     }
 
+    /**
+     * search movies by title
+     * @param title
+     * @returns {Promise<unknown>}
+     */
     function getMovieByTitle(title) {
         return new Promise((resolve, reject) => {
             fetch(url)
@@ -230,12 +296,14 @@ $(document).ready(function() {
         })
     }
 
+    /**
+     * edit db movie data by id through use of PATCH
+     * @param id
+     * @param body
+     * @returns {Promise<unknown>}
+     */
     function updateMovieByID(id, body) {
-        console.log(id);
         updateMovieWithPatch.body = JSON.stringify(body);
-        console.log(body);
-        console.log(updateMovieWithPatch);
-        console.log(updateMovieWithPatch.body);
         return new Promise((resolve, reject) => {
             fetch(`${url}/${id}`, updateMovieWithPatch)
                 .then(response => response.json())
@@ -246,9 +314,16 @@ $(document).ready(function() {
         });
     }
 
+    /**
+     * input a new movie into DB. search OMDb by title.
+     * take response data and create new movie in Glitch DB
+     * with only required data.
+     * @param body
+     * @returns {Promise<unknown>}
+     */
     function addMovies(body) {
         return new Promise((resolve, reject) => {
-            fetch(`${urlOMDb}${body.title}`)
+            fetch(`${urlOMDb}${body.title}`)    // calls OMDB through fetch
                 .then(response => response.json())
                 .then(resp => {
                     const movieData = {
@@ -261,7 +336,7 @@ $(document).ready(function() {
                         rating: body.rating
                     }
                     postNewMovie.body = JSON.stringify(movieData);
-                    fetch(url, postNewMovie)
+                    fetch(url, postNewMovie)    //calls glitch db through fetch
                         .then(response => {
                             if(response.status >= 300){
                                 reject(`Status: ${response.status}`);
@@ -276,6 +351,11 @@ $(document).ready(function() {
         });
     }
 
+    /**
+     * delete movie from DB by movie ID.
+     * @param id
+     * @returns {Promise<unknown>}
+     */
     function deleteMovieByID(id) {
         return new Promise((resolve, reject) => {
             fetch(`${url}/${id}`, deleteMovie)
