@@ -2,7 +2,7 @@
 
 // GLOBAL VARIABLES
 const url = "https://fanatical-raspy-ambert.glitch.me/movies"
-const urlOMDb = "http://www.omdbapi.com/?apikey=1b613e4b&t="
+const urlOMDb = `http://www.omdbapi.com/?apikey=${OMDB_Key}&t=`
 
 let postNewMovie = {
     method: "POST",
@@ -122,24 +122,3 @@ function deleteMovieByID(id) {
             .catch(err => reject(err));
     });
 }
-
-//
-// function getOMDbMovieData(title){
-//     return new Promise((resolve, reject) => {
-//         fetch(`${urlOMDb}${title}`)
-//             .then(response => response.json())
-//             .then(resp => {
-//                 const movieData = {
-//                     title: resp.Title,
-//                     poster: resp.Poster,
-//                     plot: resp.Plot,
-//                     genre: resp.Genre,
-//                     actors: resp.Actors,
-//                     year: resp.Year,
-//                     rating: resp.imdbRating
-//                 }
-//                 resolve(movieData);
-//             })
-//             .catch(err => reject(err));
-//     });
-// }
