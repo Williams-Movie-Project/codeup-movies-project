@@ -25,7 +25,7 @@ ___ both team members speak about their contributions (one team member speaks fo
 
 - [ ] JS best practices followed
 
-- - [ ] clearly named ids and variable names
+- - [x] clearly named ids and variable names
 - - [ ] strict mode enabled and code wrapped in IIFE
 - - [ ] code mostly abstracted into smaller functions (under 15 lines)
 
@@ -35,7 +35,7 @@ ___ both team members speak about their contributions (one team member speaks fo
 
 - [x] movies can be added
 
-- [ ] movies can be updated
+- [x] movies can be updated
 
 - [x] movies can be deleted
 
