@@ -12,8 +12,8 @@ let postNewMovie = {
     body: {}
 };
 
-let updateMovieWithPut = {
-    method: "PUT",
+let updateMovieWithPatch = {
+    method: "PATCH",
     headers: {
         'Content-Type': 'application/json',
     },
@@ -70,12 +70,12 @@ function getMovieByTitle(title) {
 
 function updateMovieByID(id, body) {
     console.log(id);
-    updateMovieWithPut.body = JSON.stringify(body);
+    updateMovieWithPatch.body = JSON.stringify(body);
     console.log(body);
-    console.log(updateMovieWithPut);
-    console.log(updateMovieWithPut.body);
+    console.log(updateMovieWithPatch);
+    console.log(updateMovieWithPatch.body);
     return new Promise((resolve, reject) => {
-        fetch(`${url}/${id}`, updateMovieWithPut)
+        fetch(`${url}/${id}`, updateMovieWithPatch)
             .then(response => response.json())
             .then(data => {
                 resolve(data)

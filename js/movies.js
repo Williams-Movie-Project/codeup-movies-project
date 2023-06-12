@@ -3,6 +3,7 @@
 $(document).ready(function() {
     // Global Variables
     const newSubmitBtn = $("#submit-new-movie-btn");
+    const editSubmitBtn = $("#submit-movie-edits-btn");
     const newTitleInput = $("#new-title");
     const newRatingInput = $("#new-movie-rating");
     const deleteMovBtn = $("#delete-movie");
@@ -30,7 +31,8 @@ $(document).ready(function() {
     $(newSubmitBtn).on("click", submitNewMovieForm);
     $(newTitleInput).on("input", toggleNewMovieFormBtn);
     $(deleteMovBtn).on("click", deleteSelectedMovie);
-    $(editMovBtn).on("click", editSelectedMovieData);
+    $(editMovBtn).on("click", populateSelectedEditMovieDataForm);
+    $(editSubmitBtn).on("click", editSelectedMovie);
 
     function showLoader(){
         $(loaderDiv).removeClass("d-none");
@@ -76,10 +78,10 @@ $(document).ready(function() {
             movieByID.then(resp => {
                 $(offCanMovTitle).html(`${resp.title}`);
                 $(offCanMovPlot).html(`${resp.plot}`);
-                $(offCanMovGenre).html(`Genre(s): ${resp.genre}`);
-                $(offCanMovActors).html(`Actor(s): ${resp.actors}`);
-                $(offCanMovYear).html(`Year: ${resp.year}`);
-                $(offCanMovRating).html(`Rating: ${resp.rating}`);
+                $(offCanMovGenre).html(`<span>Genre(s): </span><span id="selected-genres">${resp.genre}</span>`);
+                $(offCanMovActors).html(`<span>Actor(s): </span><span id="selected-actors">${resp.actors}</span>`);
+                $(offCanMovYear).html(`<span>Year: </span><span id="selected-year">${resp.year}</span>`);
+                $(offCanMovRating).html(`<span>Rating: </span><span id="selected-rating">${resp.rating}</span>`);
                 $(offCanMovID).html(resp.id);
             });
             movieByID.catch(err => console.error(err));
@@ -97,10 +99,39 @@ $(document).ready(function() {
         movieDeleted.catch(err => console.error(err));
     }
 
-    function editSelectedMovieData(e){
+    function populateSelectedEditMovieDataForm(e){
+        e.preventDefault();
+        $(editMovTitle).val($(offCanMovTitle).html());
+        $(editMovPlot).val($(offCanMovPlot).html());
+        $(editMovGenre).val($("#selected-genres").html());
+        $(editMovActors).val($("#selected-actors").html());
+        $(editMovYear).val($("#selected-year").html());
+        $(editMovRating).val($("#selected-rating").html());
+    }
+
+    function editSelectedMovie(e){
         e.preventDefault();
         const indexToEdit = parseInt($(offCanMovID).text());
-
+        const editMovieFormBody = {
+            title: $(editMovTitle).val(),
+            plot: $(editMovPlot).val(),
+            genre: $(editMovGenre).val(),
+            actors: $(editMovActors).val(),
+            year: $(editMovYear).val(),
+            rating: $(editMovRating).val()
+        };
+        console.log(editMovieFormBody);
+        const movieUpdated = updateMovieByID(indexToEdit, editMovieFormBody);
+        movieUpdated.then(resp => {
+            $(offCanMovTitle).html(resp.title);
+            $(offCanMovPlot).html(resp.plot);
+            $("#selected-genres").html(resp.genre);
+            $("#selected-actors").html(resp.actors);
+            $("#selected-year").html(resp.year);
+            $("#selected-rating").html(resp.rating);
+            $(`#${indexToEdit}-card-rating`).html(resp.rating);
+        })
+        movieUpdated.catch(err => console.error(err));
     }
 
     function toggleNewMovieFormBtn(){
@@ -120,7 +151,7 @@ $(document).ready(function() {
                   <div class="card text-bg-dark">
                     <img src="${movieData.poster}" class="card-img" alt="${movieData.title}">
                     <div class="card-footer bg-dark-subtle">
-                      <p class="card-text d-flex justify-content-between text-body-secondary"><small class="mx-2">Rating</small><small class="mx-2">${movieData.rating}</small></p>
+                      <p class="card-text d-flex justify-content-between text-body-secondary"><small class="mx-2">Rating</small><small id="${movieData.id}-card-rating" class="mx-2">${movieData.rating}</small></p>
                     </div>
                   </div>
                 </div>`;

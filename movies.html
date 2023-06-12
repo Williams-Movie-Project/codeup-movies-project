@@ -80,7 +80,7 @@
 </div>
 
 <!-- New Movie Input Form Modal -->
-<div class="modal fade" id="edit-movie-modal" tabindex="-1" aria-labelledby="edit-movie-modal-title"
+<div class="modal fade " id="edit-movie-modal" tabindex="-1" aria-labelledby="edit-movie-modal-title"
      aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
 		<div class="modal-content">
@@ -95,7 +95,7 @@
 				</div>
 				<div class="container mb-3">
 					<label for="edit-plot" class="fs-5 text-secondary">Plot</label>
-					<input type="text" name="plot" id="edit-plot" class="form-control">
+					<textarea name="plot" id="edit-plot" class="form-control" rows="3"></textarea>
 				</div>
 				<div class="container mb-3">
 					<label for="edit-actors" class="fs-5 text-secondary">Actor(s) <small class="fs-6">First Last, First Last, ..., First Last</small></label>
@@ -120,7 +120,7 @@
 					</select>
 				</div>
 				<div class="container d-flex align-items-center justify-content-end">
-					<button type="button" id="submit-movie-edits-btn" class="btn btn-outline-secondary disabled form-control" data-bs-toggle="modal" data-bs-target="#edit-movie-modal">Submit</button>
+					<button type="button" id="submit-movie-edits-btn" class="btn btn-outline-secondary form-control" data-bs-toggle="modal" data-bs-target="#edit-movie-modal">Submit</button>
 				</div>
 			</div>
 			<div class="modal-footer">
