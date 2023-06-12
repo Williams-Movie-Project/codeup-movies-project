@@ -31,9 +31,9 @@ ___ both team members speak about their contributions (one team member speaks fo
 
 ### Output (60%)
 
-- [ ] loading message present when movies are loading
+- [x] loading message present when movies are loading
 
-- [ ] movies can be added
+- [x] movies can be added
 
 - [ ] movies can be updated
 

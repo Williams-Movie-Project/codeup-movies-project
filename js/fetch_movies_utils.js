@@ -2,6 +2,7 @@
 
 // GLOBAL VARIABLES
 const url = "https://fanatical-raspy-ambert.glitch.me/movies"
+const urlOMDb = "http://www.omdbapi.com/?apikey=1b613e4b&t="
 
 let postNewMovie = {
     method: "POST",
@@ -61,20 +62,22 @@ function getMovieByTitle(title) {
                 return data.filter(d => d.title === title);
             })
             .then(data => {
-                console.log(`got "${data.title}" from db when searing by title.`)
                 resolve(data);
             })
             .catch(err => reject(err));
     })
-};
+}
 
 function updateMovieByID(id, body) {
+    console.log(id);
     updateMovieWithPut.body = JSON.stringify(body);
+    console.log(body);
+    console.log(updateMovieWithPut);
+    console.log(updateMovieWithPut.body);
     return new Promise((resolve, reject) => {
         fetch(`${url}/${id}`, updateMovieWithPut)
             .then(response => response.json())
             .then(data => {
-                console.log("Movie was updated.");
                 resolve(data)
             })
             .catch(err => reject(err));
@@ -82,20 +85,36 @@ function updateMovieByID(id, body) {
 }
 
 function addMovies(body) {
-    postNewMovie.body = JSON.stringify(body);
+    // postNewMovie.body = JSON.stringify(body);
     return new Promise((resolve, reject) => {
-        fetch(url, postNewMovie)
-            .then(response => {
-                if(response.status >= 300){
-                    reject(`Status: ${response.status}`);
-                }
-                return response.json()
-            })
+        fetch(`${urlOMDb}${body.title}`)
+            .then(response => response.json())
             .then(resp => {
-                console.log("just added a move check it out below!")
-                resolve(resp);
+                const movieData = {
+                    title: resp.Title,
+                    poster: resp.Poster,
+                    plot: resp.Plot,
+                    genre: resp.Genre,
+                    actors: resp.Actors,
+                    year: resp.Year,
+                    rating: resp.imdbRating
+                }
+                postNewMovie.body = JSON.stringify(movieData);
+                fetch(url, postNewMovie)
+                    .then(response => {
+                        if(response.status >= 300){
+                            reject(`Status: ${response.status}`);
+                        }
+                        return response.json()
+                    })
+                    .then(resp => {
+                        console.log("just added a move check it out below!")
+                        resolve(resp);
+                    })
+                    .catch(err => reject(err));
             })
             .catch(err => reject(err));
+
     });
 }
 
@@ -108,19 +127,23 @@ function deleteMovieByID(id) {
     });
 }
 
-
-// function populateMovies() {
-//     //create HTML strings for populating Page with movies
-//     const listOfMovies = getMovies();
-//     const mov = listOfMovies.then(resp => {
-//         console.log(resp)
+//
+// function getOMDbMovieData(title){
+//     return new Promise((resolve, reject) => {
+//         fetch(`${urlOMDb}${title}`)
+//             .then(response => response.json())
+//             .then(resp => {
+//                 const movieData = {
+//                     title: resp.Title,
+//                     poster: resp.Poster,
+//                     plot: resp.Plot,
+//                     genre: resp.Genre,
+//                     actors: resp.Actors,
+//                     year: resp.Year,
+//                     rating: resp.imdbRating
+//                 }
+//                 resolve(movieData);
+//             })
+//             .catch(err => reject(err));
 //     });
-//     listOfMovies.catch(err => console.error(err));
-//
-//     return mov;
 // }
-
-// TESTING FUNCTIONALITY
-//     populateMovies();
-//
-//     populateMovies();
