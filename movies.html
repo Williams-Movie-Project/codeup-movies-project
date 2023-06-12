@@ -16,7 +16,7 @@
 
 <!--    Header contains nav bar/ ... collapses on small screens-->
 <header class="container-fluid m-0 p-0 " id="header">
-	<nav class="navbar bg-secondary border-bottom border-bottom-dark navbar-expand-md" data-bs-theme="light">
+	<nav class="navbar bg-secondary border-bottom border-bottom-dark navbar-expand-md" data-bs-theme="white">
 		<div class="container-fluid d-flex">
 			<a class="navbar-brand fs-1 my-3 ms-0 me-2" href="#">Masterful Movies</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -26,8 +26,12 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<!--	Button Triggers add movie modal form    -->
-				<button id="location-search-btn" class="btn" type="button" data-bs-toggle="modal"
+				<button id="open-new-movie-form-btn" class="btn disabled" type="button" data-bs-toggle="modal"
 				        data-bs-target="#add-new-movie-modal">Add New Movie
+				</button>
+				<!--	Button Triggers search movie modal  -->
+				<button id="open-search-movie-form-btn" class="btn disabled ms-auto" type="button" data-bs-toggle="modal"
+				        data-bs-target="#search-movie-modal">Search Movies
 				</button>
 			</div>
 		</div>
@@ -61,6 +65,9 @@
 <!--    Container to hold all the movie cards   -->
 <div id="movie-container" class="container d-none my-5">
 	<h1 id="movie-div-text" class="text-center my-5">MOVIES</h1>
+	<p class="placeholder-wave">
+		<span class="placeholder col-12"></span>
+	</p>
 	<div id="movie-row"
 	     class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 d-flex justify-content-center align-items-center"></div>
 	<p class="placeholder-wave">
@@ -114,7 +121,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5 text-secondary" id="edit-movie-modal-title">New Movie Form</h1>
+				<h1 class="modal-title fs-5 text-secondary" id="edit-movie-modal-title">Update Movie Form</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
@@ -159,6 +166,54 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
 				        data-bs-target="#edit-movie-modal">Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Search Movies Modal -->
+<div class="modal fade" id="search-movie-modal" tabindex="-1" aria-labelledby="search-movie-modal-title"
+     aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5 text-secondary" id="search-movie-modal-title">Search Movie</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="container mb-3">
+					<label for="edit-title" class="fs-5 text-secondary">Title</label>
+					<input type="text" name="title" id="search-title" class="form-control">
+				</div>
+				<div class="container mb-3">
+					<label for="edit-actors" class="fs-5 text-secondary">Actor(s) <small class="fs-6">First Last, First
+						Last, ..., First Last</small></label>
+					<input type="text" name="actors" id="search-actors" class="form-control">
+				</div>
+				<div class="container mb-3">
+					<label for="edit-genres" class="fs-5 text-secondary">Genre(s) <small class="fs-6">Genre, Genre, ...,
+						Genre</small></label>
+					<input type="text" name="genre" id="search-genres" class="form-control">
+				</div>
+				<div class="container mb-3">
+					<label for="edit-year" class="fs-5 text-secondary">Year <small class="fs-6">(yyyy)</small></label>
+					<input type="number" name="year" id="search-year" class="form-control">
+				</div>
+				<div class="container my-3">
+					<select class="form-select text-secondary" id="search-movie-rating">
+						<option class="text-center" selected value="0">Rating</option>
+						<option class="text-center" value="1">1 Star</option>
+						<option class="text-center" value="2">2 Stars</option>
+						<option class="text-center" value="3">3 Stars</option>
+						<option class="text-center" value="4">4 Stars</option>
+						<option class="text-center" value="5">5 Stars</option>
+					</select>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+				        data-bs-target="#search-movie-modal">Cancel
 				</button>
 			</div>
 		</div>

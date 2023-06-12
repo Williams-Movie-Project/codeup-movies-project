@@ -1,7 +1,12 @@
 "use strict";
 
 $(document).ready(function() {
+    // Global Variables for Movie Data;
+    let allMovieData = [];
+
     // Global Variables For HTML Elements by ID
+    const openAddMovieBtn = $("#open-new-movie-form-btn");
+    const openSearchBtn = $("#open-search-movie-form-btn");
     const newSubmitBtn = $("#submit-new-movie-btn");
     const editSubmitBtn = $("#submit-movie-edits-btn");
     const newTitleInput = $("#new-title");
@@ -25,6 +30,12 @@ $(document).ready(function() {
     const editMovActors = $("#edit-actors");
     const editMovYear = $("#edit-year");
     const editMovRating = $("#edit-movie-rating");
+    const searchTitleInput = $("#search-title");
+    const searchActorsInput = $("#search-actors");
+    const searchGenreInput= $("#search-genres");
+    const searchYearInput = $("#search-year");
+    const searchRatingBtn = $("#search-movie-rating-btn");
+    const searchRatingInput = $("#search-movie-rating");
 
 
     // GLOBAL VARIABLES for fetch methods
@@ -55,11 +66,20 @@ $(document).ready(function() {
 
 
     // Static Event Listeners
+    // Buttons
     $(newSubmitBtn).on("click", submitNewMovieForm);
-    $(newTitleInput).on("input", toggleNewMovieFormBtn);
     $(deleteMovBtn).on("click", deleteSelectedMovie);
     $(editMovBtn).on("click", populateSelectedEditMovieDataForm);
     $(editSubmitBtn).on("click", editSelectedMovie);
+    $(searchRatingBtn).on("click", searchByRating);
+
+    // Inputs
+    $(newTitleInput).on("input", toggleNewMovieFormBtn);
+    $(searchTitleInput).on("input", searchByTitle);
+    $(searchActorsInput).on("input", searchByActors);
+    $(searchGenreInput).on("input", searchByGenre);
+    $(searchYearInput).on("input", searchByYear);
+    $(searchRatingInput).on("change", searchByRating);
 
     /**
      * hides cards and displays loader div.
@@ -75,6 +95,8 @@ $(document).ready(function() {
     function hideLoader(){
         $(loaderDiv).addClass("d-none");
         $(movieContainerDiv).removeClass("d-none");
+        $(openAddMovieBtn).removeClass("disabled");
+        $(openSearchBtn).removeClass("disabled");
     }
 
     /**
@@ -91,6 +113,7 @@ $(document).ready(function() {
                 }
             }
             hideLoader();
+            allMovieData = resp;
         });
         movies.catch((err => console.error(err)));
     }
@@ -110,8 +133,109 @@ $(document).ready(function() {
             addClickEventToCards(resp.id);
             $(newTitleInput).val("");
             $(newRatingInput).val(0);
+            allMovieData.push(resp);
         });
         movAddedResp.catch(err => console.error(err));
+    }
+
+    /**
+     * when searching a title, automatically hide and show movie cards if
+     * title contains current search string.
+     */
+    function searchByTitle(){
+        $(searchRatingInput).val(0);
+        $(searchActorsInput).val("");
+        $(searchGenreInput).val("");
+        $(searchYearInput).val("");
+        let titleToSearch = $(searchTitleInput).val();
+        allMovieData.forEach(function (movie) {
+            const el = $(`#${movie.id}`);
+            if(!movie.title.toLowerCase().includes(titleToSearch.toLowerCase()) && !$(el).hasClass("d-none")){
+                $(el).addClass("d-none");
+            }else if(movie.title.toLowerCase().includes(titleToSearch.toLowerCase()) && $(el).hasClass("d-none")){
+                $(el).removeClass("d-none");
+            }
+        });
+    }
+
+    /**
+     * when searching by actor(s), automatically hide and show movie cards if
+     * actor(s) contains current search string.
+     */
+    function searchByActors(){
+        $(searchRatingInput).val(0);
+        $(searchTitleInput).val("");
+        $(searchGenreInput).val("");
+        $(searchYearInput).val("");
+        let actorsToSearch = $(searchActorsInput).val();
+        allMovieData.forEach(function (movie) {
+            const el = $(`#${movie.id}`);
+            if(!movie.actors.toLowerCase().includes(actorsToSearch.toLowerCase()) && !$(el).hasClass("d-none")){
+                $(el).addClass("d-none");
+            }else if(movie.actors.toLowerCase().includes(actorsToSearch.toLowerCase()) && $(el).hasClass("d-none")){
+                $(el).removeClass("d-none");
+            }
+        });
+    }
+
+    /**
+     * when searching by genre(s), automatically hide and show movie cards if
+     * genre(s) contains current search string.
+     */
+    function searchByGenre(){
+        $(searchRatingInput).val(0);
+        $(searchTitleInput).val("");
+        $(searchActorsInput).val("");
+        $(searchYearInput).val("");
+        let genreToSearch = $(searchGenreInput).val();
+        allMovieData.forEach(function (movie) {
+            const el = $(`#${movie.id}`);
+            if(!movie.genre.toLowerCase().includes(genreToSearch.toLowerCase()) && !$(el).hasClass("d-none")){
+                $(el).addClass("d-none");
+            }else if(movie.genre.toLowerCase().includes(genreToSearch.toLowerCase()) && $(el).hasClass("d-none")){
+                $(el).removeClass("d-none");
+            }
+        });
+    }
+
+    /**
+     * when searching by year, automatically hide and show movie cards if
+     * year contains current search string.
+     */
+    function searchByYear(){
+        $(searchRatingInput).val(0);
+        $(searchTitleInput).val("");
+        $(searchGenreInput).val("");
+        $(searchActorsInput).val("");
+        let yearToSearch = $(searchYearInput).val();
+        allMovieData.forEach(function (movie) {
+            const el = $(`#${movie.id}`);
+            if(!movie.year.toLowerCase().includes(yearToSearch.toLowerCase()) && !$(el).hasClass("d-none")){
+                $(el).addClass("d-none");
+            }else if(movie.year.toLowerCase().includes(yearToSearch.toLowerCase()) && $(el).hasClass("d-none")){
+                $(el).removeClass("d-none");
+            }
+        });
+    }
+
+    /**
+     * when searching by rating, hide and show movie cards if
+     * Rating matches the selected search.
+     */
+    function searchByRating(){
+        $(searchTitleInput).val("");
+        $(searchGenreInput).val("");
+        $(searchActorsInput).val("");
+        $(searchYearInput).val("");
+        const selectedSearchRating = $(searchRatingInput).val();
+        allMovieData.forEach(function (movie) {
+            const el = $(`#${movie.id}`);
+            if(movie.rating !== selectedSearchRating && !$(el).hasClass("d-none")){
+                $(el).addClass("d-none");
+            }else if(movie.rating === selectedSearchRating && $(el).hasClass("d-none")){
+                $(el).removeClass("d-none");
+            }
+        });
     }
 
     /**
@@ -186,7 +310,6 @@ $(document).ready(function() {
             year: $(editMovYear).val(),
             rating: $(editMovRating).val()
         };
-        console.log(editMovieFormBody);
         const movieUpdated = updateMovieByID(indexToEdit, editMovieFormBody);
         movieUpdated.then(resp => {
             $(offCanMovTitle).html(resp.title);
@@ -196,6 +319,13 @@ $(document).ready(function() {
             $("#selected-year").html(resp.year);
             $("#selected-rating").html(resp.rating);
             $(`#${indexToEdit}-card-rating`).html(resp.rating);
+            let i= 0;
+            allMovieData.forEach(function (mov, index){
+                if(mov.id === indexToEdit){
+                    i = index
+                }
+            });
+            allMovieData[i] = resp;
         })
         movieUpdated.catch(err => console.error(err));
     }
@@ -240,7 +370,6 @@ $(document).ready(function() {
         $(movieRow).append(cardString);
     }
 
-
     // API FETCH section
     /**
      * retrieve all movies.
@@ -282,12 +411,12 @@ $(document).ready(function() {
      * @param title
      * @returns {Promise<unknown>}
      */
-    function getMovieByTitle(title) {
+    function getMoviesByTitle(title) {
         return new Promise((resolve, reject) => {
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    return data.filter(d => d.title === title);
+                    return data.filter(d => d.title.toLowerCase().includes(title));
                 })
                 .then(data => {
                     resolve(data);
@@ -366,5 +495,6 @@ $(document).ready(function() {
     }
 
 
+    // Initial call to get all movies populated.
     getAllMovies();
 });
