@@ -37,7 +37,7 @@ ___ both team members speak about their contributions (one team member speaks fo
 
 - [ ] movies can be updated
 
-- [ ] movies can be deleted
+- [x] movies can be deleted
 
 - [ ] implementation of at least two of the suggested bonuses
 

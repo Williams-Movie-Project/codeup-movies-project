@@ -4,6 +4,7 @@ $(document).ready(function() {
     // Global Variables
     const newSubmitBtn = $("#submit-new-movie-btn");
     const newTitleInput = $("#new-title");
+    const newRatingInput = $("#new-movie-rating");
 
     // Static Event Listeners
     $(newSubmitBtn).on("click", submitNewMovieForm);
@@ -37,13 +38,14 @@ $(document).ready(function() {
     function submitNewMovieForm(e){
         e.preventDefault();
         showLoader();
-        const formBody = {title: $(newTitleInput).val()}
+        const formBody = {title: $(newTitleInput).val(),  rating: $(newRatingInput).val()}
         const movAddedResp = addMovies(formBody);
         movAddedResp.then(resp => {
             addMovieCardToMovieDiv(createAMovieCard(resp));
             addClickEventToCards(resp.id);
             hideLoader();
             $(newTitleInput).val("");
+            $(newRatingInput).val(0);
         });
         movAddedResp.catch(err => console.error(err));
     }

@@ -85,7 +85,6 @@ function updateMovieByID(id, body) {
 }
 
 function addMovies(body) {
-    // postNewMovie.body = JSON.stringify(body);
     return new Promise((resolve, reject) => {
         fetch(`${urlOMDb}${body.title}`)
             .then(response => response.json())
@@ -97,7 +96,7 @@ function addMovies(body) {
                     genre: resp.Genre,
                     actors: resp.Actors,
                     year: resp.Year,
-                    rating: resp.imdbRating
+                    rating: body.rating
                 }
                 postNewMovie.body = JSON.stringify(movieData);
                 fetch(url, postNewMovie)
@@ -107,10 +106,7 @@ function addMovies(body) {
                         }
                         return response.json()
                     })
-                    .then(resp => {
-                        console.log("just added a move check it out below!")
-                        resolve(resp);
-                    })
+                    .then(resp => resolve(resp))
                     .catch(err => reject(err));
             })
             .catch(err => reject(err));
