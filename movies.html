@@ -30,8 +30,8 @@
 				        data-bs-target="#add-new-movie-modal">Add New Movie
 				</button>
 				<!--	Button Triggers search movie modal  -->
-				<button id="open-search-movie-form-btn" class="btn disabled ms-auto" type="button" data-bs-toggle="modal"
-				        data-bs-target="#search-movie-modal">Search Movies
+				<button id="open-search-movie-form-btn" class="btn disabled ms-auto" type="button" data-bs-toggle="offcanvas"
+				        data-bs-target="#offcanvasSearchForm">Search Movies
 				</button>
 			</div>
 		</div>
@@ -79,18 +79,18 @@
 <div class="modal fade" id="add-new-movie-modal" tabindex="-1" aria-labelledby="add-movie-modal-title"
      aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
-		<div class="modal-content">
+		<div class="modal-content text-bg-secondary">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5 text-secondary" id="add-movie-modal-title">New Movie Form</h1>
+				<h1 class="modal-title fs-5" id="add-movie-modal-title">New Movie Form</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<div class="container mb-5">
-					<label for="new-title" class="fs-5 text-secondary">Title</label>
+					<label for="new-title" class="fs-5">Title</label>
 					<input type="text" name="title" id="new-title" class="form-control">
 				</div>
 				<div class="container my-5">
-					<select class="form-select text-secondary" id="new-movie-rating">
+					<select class="form-select " id="new-movie-rating">
 						<option class="text-center" selected value="0">Rating</option>
 						<option class="text-center" value="1">1 Star</option>
 						<option class="text-center" value="2">2 Stars</option>
@@ -101,7 +101,7 @@
 				</div>
 				<div class="container d-flex align-items-center justify-content-end">
 					<button type="button" id="submit-new-movie-btn"
-					        class="btn btn-outline-secondary disabled form-control" data-bs-toggle="modal"
+					        class="btn btn-outline-dark disabled form-control" data-bs-toggle="modal"
 					        data-bs-target="#add-new-movie-modal">Submit
 					</button>
 				</div>
@@ -119,36 +119,36 @@
 <div class="modal fade " id="edit-movie-modal" tabindex="-1" aria-labelledby="edit-movie-modal-title"
      aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
-		<div class="modal-content">
+		<div class="modal-content text-bg-secondary">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5 text-secondary" id="edit-movie-modal-title">Update Movie Form</h1>
+				<h1 class="modal-title fs-5" id="edit-movie-modal-title">Update Movie Form</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<div class="container mb-3">
-					<label for="edit-title" class="fs-5 text-secondary">Title</label>
+					<label for="edit-title" class="fs-5">Title</label>
 					<input type="text" name="title" id="edit-title" class="form-control">
 				</div>
 				<div class="container mb-3">
-					<label for="edit-plot" class="fs-5 text-secondary">Plot</label>
+					<label for="edit-plot" class="fs-5">Plot</label>
 					<textarea name="plot" id="edit-plot" class="form-control" rows="3"></textarea>
 				</div>
 				<div class="container mb-3">
-					<label for="edit-actors" class="fs-5 text-secondary">Actor(s) <small class="fs-6">First Last, First
+					<label for="edit-actors" class="fs-5">Actor(s) <small class="fs-6">First Last, First
 						Last, ..., First Last</small></label>
 					<input type="text" name="actors" id="edit-actors" class="form-control">
 				</div>
 				<div class="container mb-3">
-					<label for="edit-genres" class="fs-5 text-secondary">Genre(s) <small class="fs-6">Genre, Genre, ...,
+					<label for="edit-genres" class="fs-5">Genre(s) <small class="fs-6">Genre, Genre, ...,
 						Genre</small></label>
 					<input type="text" name="genre" id="edit-genres" class="form-control">
 				</div>
 				<div class="container mb-3">
-					<label for="edit-year" class="fs-5 text-secondary">Year <small class="fs-6">(yyyy)</small></label>
+					<label for="edit-year" class="fs-5">Year <small class="fs-6">(yyyy)</small></label>
 					<input type="number" name="year" id="edit-year" class="form-control">
 				</div>
 				<div class="container my-5">
-					<select class="form-select text-secondary" id="edit-movie-rating">
+					<select class="form-select" id="edit-movie-rating">
 						<option class="text-center" selected value="0">Rating</option>
 						<option class="text-center" value="1">1 Star</option>
 						<option class="text-center" value="2">2 Stars</option>
@@ -158,7 +158,7 @@
 					</select>
 				</div>
 				<div class="container d-flex align-items-center justify-content-end">
-					<button type="button" id="submit-movie-edits-btn" class="btn btn-outline-secondary form-control"
+					<button type="button" id="submit-movie-edits-btn" class="btn btn-outline-dark form-control"
 					        data-bs-toggle="modal" data-bs-target="#edit-movie-modal">Submit
 					</button>
 				</div>
@@ -176,40 +176,12 @@
 <div class="modal fade" id="search-movie-modal" tabindex="-1" aria-labelledby="search-movie-modal-title"
      aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
-		<div class="modal-content">
+		<div class="modal-content text-bg-secondary">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5 text-secondary" id="search-movie-modal-title">Search Movie</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			
 			</div>
 			<div class="modal-body">
-				<div class="container mb-3">
-					<label for="edit-title" class="fs-5 text-secondary">Title</label>
-					<input type="text" name="title" id="search-title" class="form-control">
-				</div>
-				<div class="container mb-3">
-					<label for="edit-actors" class="fs-5 text-secondary">Actor(s) <small class="fs-6">First Last, First
-						Last, ..., First Last</small></label>
-					<input type="text" name="actors" id="search-actors" class="form-control">
-				</div>
-				<div class="container mb-3">
-					<label for="edit-genres" class="fs-5 text-secondary">Genre(s) <small class="fs-6">Genre, Genre, ...,
-						Genre</small></label>
-					<input type="text" name="genre" id="search-genres" class="form-control">
-				</div>
-				<div class="container mb-3">
-					<label for="edit-year" class="fs-5 text-secondary">Year <small class="fs-6">(yyyy)</small></label>
-					<input type="number" name="year" id="search-year" class="form-control">
-				</div>
-				<div class="container my-3">
-					<select class="form-select text-secondary" id="search-movie-rating">
-						<option class="text-center" selected value="0">Rating</option>
-						<option class="text-center" value="1">1 Star</option>
-						<option class="text-center" value="2">2 Stars</option>
-						<option class="text-center" value="3">3 Stars</option>
-						<option class="text-center" value="4">4 Stars</option>
-						<option class="text-center" value="5">5 Stars</option>
-					</select>
-				</div>
+			
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-toggle="modal"
@@ -226,13 +198,12 @@
 	backdrop
 </button>
 
-<!--    Side Menu, Display Movie data, contains Edit/Delete Buttons     -->
+<!--    Side Menu Left, Display Movie data, contains Edit/Delete Buttons     -->
 <div class="offcanvas offcanvas-start text-bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
      aria-labelledby="offcanvasWithBothOptionsLabel">
 	<div class="offcanvas-header">
-		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 	</div>
-	<div class="offcanvas-body">
+	<div class="offcanvas-body d-flex flex-column">
 		<h4 id="offcanvas-movie-title"></h4>
 		<p id="offcanvas-movie-plot"></p>
 		<p id="offcanvas-movie-genre"></p>
@@ -240,7 +211,7 @@
 		<p id="offcanvas-movie-year"></p>
 		<p id="offcanvas-movie-rating"></p>
 		<p id="offcanvas-movie-id" class="collapse"></p>
-		<div class="row row-cols-2">
+		<div class="row row-cols-2 mt-auto">
 			<div class="col d-flex align-items-center justify-content-center">
 				<button class="btn btn-secondary" id="edit-movie" type="button" data-bs-toggle="modal"
 				        data-bs-target="#edit-movie-modal">Edit Movie
@@ -249,6 +220,46 @@
 			<div class="col d-flex align-items-center justify-content-center">
 				<button class="btn btn-secondary" id="delete-movie" type="button">Delete Movie</button>
 			</div>
+		</div>
+	</div>
+</div>
+
+<!--    Side Menu Right, Search movies, contains inputs for searching     -->
+<div class="offcanvas offcanvas-end text-bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasSearchForm"
+     aria-labelledby="offcanvasSearchForm">
+	<div class="offcanvas-header">
+		<h1 class="modal-title fs-5 text-secondary" id="search-movie-modal-title">Search Movie</h1>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body d-flex flex-column">
+		<div class="container mb-3">
+			<label for="search-title" class="fs-5 text-secondary">Title</label>
+			<input type="text" name="title" id="search-title" class="form-control">
+		</div>
+		<div class="container mb-3">
+			<label for="search-actors" class="fs-5 text-secondary">Actor(s) <small class="fs-6">First Last, First
+				Last, ..., First Last</small></label>
+			<input type="text" name="actors" id="search-actors" class="form-control">
+		</div>
+		<div class="container mb-3">
+			<label for="search-genres" class="fs-5 text-secondary">Genre(s) <small class="fs-6">Genre, Genre, ...,
+				Genre</small></label>
+			<input type="text" name="genre" id="search-genres" class="form-control">
+		</div>
+		<div class="container mb-3">
+			<label for="search-year" class="fs-5 text-secondary">Year <small class="fs-6">(yyyy)</small></label>
+			<input type="number" name="year" id="search-year" class="form-control">
+		</div>
+		<div class="container mb-3">
+			<label for="search-movie-rating" class="fs-5 text-secondary">Rating</label>
+			<select class="form-select text-secondary" id="search-movie-rating">
+				<option class="text-center" selected value="0">Rating</option>
+				<option class="text-center" value="1">1 Star</option>
+				<option class="text-center" value="2">2 Stars</option>
+				<option class="text-center" value="3">3 Stars</option>
+				<option class="text-center" value="4">4 Stars</option>
+				<option class="text-center" value="5">5 Stars</option>
+			</select>
 		</div>
 	</div>
 </div>
